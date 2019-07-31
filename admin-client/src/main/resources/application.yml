@@ -7,8 +7,8 @@ spring:
     admin:
       client:
         url: http://localhost:9092
-        username: user
-        password: password
+#        username: user
+#        password: password
 
 
    #开放所有监控端点
@@ -17,10 +17,13 @@ server:
   port: 9091
 management:
   endpoints:
-
     web:
       exposure:
       #开启所有节点
         include: "*"
         #忽略节点
-        exclude: [env,beans]
+      #  exclude: [env,beans]
+  #具体开启明细 可以看到redis db啥的
+  endpoint:
+    health:
+      show-details: always
