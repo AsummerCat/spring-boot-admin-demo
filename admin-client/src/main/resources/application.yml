@@ -7,6 +7,9 @@ spring:
     admin:
       client:
         url: http://localhost:9092
+        username: user
+        password: password
+
 
    #开放所有监控端点
     #开启监控
@@ -14,7 +17,10 @@ server:
   port: 9091
 management:
   endpoints:
+
     web:
       exposure:
-        exclude: "*"
-
+      #开启所有节点
+        include: "*"
+        #忽略节点
+        exclude: [env,beans]
