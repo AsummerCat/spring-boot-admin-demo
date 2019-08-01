@@ -1,0 +1,18 @@
+server:
+  port: 8700
+
+## eureka 客户端基本配置
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9010/eureka
+    healthcheck:
+      enabled: true
+
+
+spring:
+  application:
+    name: admin-server

@@ -1,0 +1,53 @@
+server:
+  port: 8300
+
+
+## eureka 客户端基本配置
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    # 这边测试端点所有剔除快一点
+    # 每间隔30s，向服务端发送一次心跳，证明自己依然"存活"
+    lease-renewal-interval-in-seconds: 5
+    # 告诉服务端，如果我60s之内没有给你发心跳，就代表我"死"了，将我踢出掉。
+    lease-expiration-duration-in-seconds: 9
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9010/eureka
+    healthcheck:
+      enabled: true
+spring:
+  application:
+    name: admin-client
+
+management:
+  endpoints:
+    web:
+      exposure:
+#        include: [info,health,beans,env,configprops,beans,dump,mappings,metrics,trace]
+
+# info 节点        自定义配置信息 (必开)
+# health节点       心跳监控节点   (必开)
+# beans节点        bean装配信息可以在这里看到
+# env节点          获取全部(系统)环境变量属性
+# configprops节点  描述配置属性（包含默认值）如何注入Bean 程序的默认配置属性
+# mappings节点     描述全部的URI路径，以及它们和控制器（包含Actuator端点）的映射关系
+# metrics节点      报告各种应用程序度量信息，比如内存用量和HTTP请求计数 比如线程啥的 显示在Details上
+#trace节点         提供基本的HTTP请求跟踪信息（时间戳、HTTP头等）
+#shutdown节点      关闭应用程序，要求 endpoints.shutdown.enabled 设置为 true
+
+      #开启所有节点 不设置的话 默认开启 info 和 health端点
+        include: "*"
+        #忽略节点
+      #  exclude: [env,beans]
+  #具体开启明细 可以看到redis db啥的
+  endpoint:
+    health:
+      show-details: always
+
+
+# info节点会显示一下 info 开头的内容
+info:
+  test: 001
+  test1: 002
